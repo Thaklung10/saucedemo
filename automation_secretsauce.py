@@ -8,7 +8,8 @@ import time
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import Select
-from selenium.webdriver.common.action_chains import ActionChains
+#import actionchains
+#from selenium.webdriver.common.action_chains import ActionChains
 #launch browser
 driver=webdriver.Edge()
 time.sleep(2)
@@ -32,6 +33,7 @@ wait = WebDriverWait(driver, 10)
 
 #login_button=driver.find_element(By.ID,"login-button")
 login_button=wait.until(EC.element_to_be_clickable((By.XPATH,"//input[@id='login-button']")))
+
 #OR login_button = driver.find_element(*(By.XPATH,"//input[@id='login-button']"))
 # from extension
 login_button.click()
@@ -40,8 +42,9 @@ time.sleep(2)
 #actions=ActionChains(driver)
 #actions.double_click(login_button).perform()
 
-#assert "inventory" in driver.current_url,"Failed! Login.unsuccessful"
+#assert "inventory" in driver.current_url,"Failed! Login.unsuccessful" OR,
 
+## To know login successful or not
 # if "inventory" in driver.current_url:
 #     print("Login successful")
 # else:
@@ -53,8 +56,6 @@ time.sleep(2)
 #scroll to bottom
 driver.execute_script("window.scrollTo(0,document.body.scrollHeight);")
 time.sleep(2)
-#scroll bottom to top
-#driver.execute_script("window.scrollTo(0,0);")
 
 #Adding items in cart
 sauce_labs_onesie=driver.find_element(By.ID,"add-to-cart-sauce-labs-onesie")
@@ -64,9 +65,11 @@ Tshirt_red=driver.find_element(By.ID,"add-to-cart-test.allthethings()-t-shirt-(r
 Tshirt_red.click()
 time.sleep(2)
 
-#In Cart
+## going to cart
+#scroll bottom to top
 driver.execute_script("window.scrollTo(0,0);")
 time.sleep(2)
+#clicking cart logo
 cartlogo=driver.find_element(By.XPATH,"//*[@id='shopping_cart_container']/a")
 cartlogo.click()
 time.sleep(2)
@@ -92,28 +95,28 @@ Continue=driver.find_element(By.ID,"continue")
 Continue.click()
 time.sleep(2)
 
-#scroll down
+#to scroll down screen
 driver.execute_script("window.scrollTo(0,document.body.scrollHeight);")
-
+time.sleep(2)
 #finish the process
 finish=driver.find_element(By.ID,"finish")
 finish.click()
 time.sleep(2)
 
 #To know the process is completed or not
-#assert "checkout-complete.html" in driver.current_url,"Failed! Login.unsuccessful"
+#assert "checkout-complete.html" in driver.current_url,"Failed! Login.unsuccessful" OR,
 if "checkout-complete.html" in driver.current_url:
-   print("Congratulation! Purchasing item/s is/are successful.")
+   print("Congratulation! You purchased items.")
 else:
- print("Sorry! Purchase is unsuccessful.")
-#Back to home
+ print("Sorry! Item is not purchased.")
+#back to home
 backtohome=driver.find_element(By.ID,"back-to-products")
 backtohome.click()
 time.sleep(2)
 #To select the dropdown option
 dropdown=Select(driver.find_element(By.XPATH,"//*[@id='header_container']/div[2]/div/span/select"))
 dropdown.select_by_value("lohi")
-time.sleep(4)
+time.sleep(3)
 
 # Logging out from the website
 menu=driver.find_element(By.ID,"react-burger-menu-btn")
@@ -123,8 +126,8 @@ time.sleep(2)
 logout=driver.find_element(By.ID,"logout_sidebar_link")
 logout.click()
 time.sleep(2)
-
-assert "saucedemo" in driver.current_url,"Failed! Logout.Unsuccessful"
+#To know the process is completed or not
+assert "saucedemo" in driver.current_url,"failed! logout unsuccessful."
 driver.quit()
 
 
